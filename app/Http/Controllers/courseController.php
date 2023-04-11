@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\CoursePerStudent;
+use App\Models\student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class courseController extends Controller
 {
@@ -36,7 +39,16 @@ class courseController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        //dd();
+        $id= Auth::id();
+        $student = student::where('user_id',$id)->first();
+
+        foreach($request->except('_token') as $course){
+            $registerCourses = new CoursePerStudent;
+            $registerCourses->student_id = $student->student_id;
+            $registerCourses->course_id = $course;
+            $registerCourses->save();
+        }
     }
 
     /**

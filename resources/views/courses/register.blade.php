@@ -28,7 +28,7 @@
                     <th>{{$course['course']}}</th>
                     <td>{{$course['seccion']}}</td>
                     <td>{{$course['cupos']}}</td>
-                    <td><input type="radio" name="{{$course['course']}}" value="{{$course['seccion']}}" ></td>
+                    <td><input type="radio" name="{{$course['course']}}" value="{{$course['id']}}" ></td>
 
                 
                 

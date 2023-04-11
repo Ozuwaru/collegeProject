@@ -30,7 +30,7 @@ Route::get('login',[loginController::class,'login'])->name('login');
 Route::post('loginF',[loginController::class,'loginF'])->name('loginF');
 
 
-Route::get('logout',[logoutController::class,'logout'])->name('logout');
-Route::resource('student',studentController::class);
+Route::get('logout',[logoutController::class,'logout'])->name('logout')->middleware('auth.basic');
+Route::resource('student',studentController::class)->middleware('auth.basic');
 
-Route::resource('courses', courseController::class);
+Route::resource('courses', courseController::class)->middleware('auth.basic');

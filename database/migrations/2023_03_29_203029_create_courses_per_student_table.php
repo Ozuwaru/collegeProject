@@ -14,9 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('courses_per_student', function (Blueprint $table) {
-
+            $table->id();
             $table->bigInteger('student_id')->unsigned();
             $table->bigInteger('course_id')->unsigned();
+            $table->integer('first cut');
+            $table->integer('second cut');
+            $table->integer('third cut');
 
 
             $table->foreign('student_id')->references('id')->on('users');

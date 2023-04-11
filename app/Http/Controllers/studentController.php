@@ -25,16 +25,19 @@ class studentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        $student = new Student;
-        //$Suser= Auth::user();
+    {   
         $user = User::find(Auth::id());
-        $user->isStudent= true;
-        $user->save();
-        $student->semestre = 1;
-        $student->user_id = $user->id;
-        $student->save();
-        return route('courses.index');
+        if($user->isStudent==false){
+            $student = new Student;
+            //$Suser= Auth::user();
+            $user->isStudent= true;
+            $user->save();
+            $student->semestre = 1;
+            $student->user_id = $user->id;
+            $student->save();
+        }
+        
+        return redirect()->route('courses.index');
         //return view('inscripcion');
         //dd($student);
     }
