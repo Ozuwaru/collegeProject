@@ -13,11 +13,14 @@
 
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="{{route('register');}}" class="nav-link">Registro</a>
+                    <a href="{{route('register');}}" class="nav-link">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('login');}}" class="nav-link">Login</a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Informacion</a>
+                    <a href="#" class="nav-link">Information</a>
                 </li>
 
             </ul>

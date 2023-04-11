@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\courseController;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\logoutController;
 use App\Http\Controllers\pageController;
@@ -30,6 +31,6 @@ Route::post('loginF',[loginController::class,'loginF'])->name('loginF');
 
 
 Route::get('logout',[logoutController::class,'logout'])->name('logout');
-    Route::resource('student',studentController::class);
+Route::resource('student',studentController::class);
 
-//Route::group('student',)
+Route::resource('courses', courseController::class);

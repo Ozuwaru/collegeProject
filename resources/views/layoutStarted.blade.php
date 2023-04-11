@@ -15,6 +15,9 @@
                 <li class="nav-item">
                     <a href="{{route('logout');}}" class="nav-link">Logout</a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{route('courses.index');}}" class="nav-link">Register Course</a>
+                </li>
 
                 <li class="nav-item">
                     <a href="#" class="nav-link">Notas</a>

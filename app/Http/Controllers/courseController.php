@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\student;
-use App\Models\User;
+use App\Models\Course;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class studentController extends Controller
+class courseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +14,10 @@ class studentController extends Controller
      */
     public function index()
     {
-        //
+        $courses= Course::all();
+        return view('courses/register',['courses'=>$courses]);
     }
-    
+
     /**
      * Show the form for creating a new resource.
      *
@@ -26,17 +25,7 @@ class studentController extends Controller
      */
     public function create()
     {
-        $student = new Student;
-        //$Suser= Auth::user();
-        $user = User::find(Auth::id());
-        $user->isStudent= true;
-        $user->save();
-        $student->semestre = 1;
-        $student->user_id = $user->id;
-        $student->save();
-        return route('courses.index');
-        //return view('inscripcion');
-        //dd($student);
+        //
     }
 
     /**
@@ -47,7 +36,7 @@ class studentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**
