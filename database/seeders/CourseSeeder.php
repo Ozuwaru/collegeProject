@@ -16,12 +16,12 @@ class CourseSeeder extends Seeder
     public function run()
     {
         $courses = [
-            ['course'=> 'Matematica', 'seccion'=> '3D1', 'cupos'=>40],
-            ['course'=> 'Matematica', 'seccion'=> '3D2', 'cupos'=>40],
-            ['course'=> 'Programacion', 'seccion'=> '3D1', 'cupos'=>40],
-            ['course'=> 'Programacion', 'seccion'=> '3D2', 'cupos'=>40],
-            ['course'=> 'Fisica', 'seccion'=> '3D1', 'cupos'=>40],
-            ['course'=> 'Fisica', 'seccion'=> '3D2', 'cupos'=>40]
+            ['semestre'=>1,'course'=> 'Matematica', 'seccion'=> '3D1', 'cupos'=>40],
+            ['semestre'=>1,'course'=> 'Matematica', 'seccion'=> '3D2', 'cupos'=>40],
+            ['semestre'=>1,'course'=> 'Programacion', 'seccion'=> '3D1', 'cupos'=>40],
+            ['semestre'=>1,'course'=> 'Programacion', 'seccion'=> '3D2', 'cupos'=>40],
+            ['semestre'=>1,'course'=> 'Fisica', 'seccion'=> '3D1', 'cupos'=>40],
+            ['semestre'=>1,'course'=> 'Fisica', 'seccion'=> '3D2', 'cupos'=>40]
         ];
         DB::table('courses')->insert($courses);
     }

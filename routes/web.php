@@ -17,10 +17,23 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/',[pageController::class,'dashboard'])->middleware('auth.basic')->name('dashboard');
 // Route::get('/', function () {
-//     return view('dashboard');
-// })->name('dashboard')->middleware('auth.basic');
+    //     return view('dashboard');
+    // })->name('dashboard')->middleware('auth.basic');
+    
+    
+Route::middleware(['auth'])->group(function (){
+        
+        
+    Route::get('/',[pageController::class,'dashboard'])->middleware('auth.basic')->name('dashboard');
+    
+    
+    Route::get('logout',[logoutController::class,'logout'])->name('logout')->middleware('auth.basic');
+    Route::resource('student',studentController::class)->middleware('auth.basic');
+    
+    Route::resource('courses', courseController::class)->middleware('auth.basic');
+    Route::get('editGrades', [courseController::class,'editG'])->middleware('auth.basic')->name('edit');
+});
 
 Route::get('register',[registerController::class,'register'])->name('register');
 Route::post('registerF',[registerController::class,'registerF'])->name('registerF');
@@ -30,7 +43,3 @@ Route::get('login',[loginController::class,'login'])->name('login');
 Route::post('loginF',[loginController::class,'loginF'])->name('loginF');
 
 
-Route::get('logout',[logoutController::class,'logout'])->name('logout')->middleware('auth.basic');
-Route::resource('student',studentController::class)->middleware('auth.basic');
-
-Route::resource('courses', courseController::class)->middleware('auth.basic');

@@ -17,9 +17,10 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('student_id')->unsigned();
             $table->bigInteger('course_id')->unsigned();
-            $table->integer('first cut');
-            $table->integer('second cut');
-            $table->integer('third cut');
+            $table->integer('first_cut');
+            $table->integer('second_cut');
+            $table->integer('third_cut');
+            $table->integer('total');
 
 
             $table->foreign('student_id')->references('id')->on('users');

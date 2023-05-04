@@ -28,8 +28,8 @@ class studentController extends Controller
     {   
         $user = User::find(Auth::id());
         if($user->isStudent==false){
+            
             $student = new Student;
-            //$Suser= Auth::user();
             $user->isStudent= true;
             $user->save();
             $student->semestre = 1;
@@ -37,9 +37,7 @@ class studentController extends Controller
             $student->save();
         }
         
-        return redirect()->route('courses.index');
-        //return view('inscripcion');
-        //dd($student);
+        return redirect()->route('courses.create',['userID',$user->id]);
     }
 
     /**

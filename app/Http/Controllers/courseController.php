@@ -15,20 +15,57 @@ class courseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $courses= Course::all();
-        return view('courses/register',['courses'=>$courses]);
+
+    public function save(Request $request,$id){
+        $course = CoursePerStudent::find($id);
+        $course->first_cut = $request->input('first_cut');
+        $course->second_cut = $request->input('second_cut');
+        $course->third_cut = $request->input('third_cut');
+        $course->total = ($request->input('first_cut') + $request->input('second_cut') + $request->input('third_cut'))/3;
+        $course->save();
+        return redirect('courses');
     }
 
+    public function index()
+    {
+        
+        //$id= Auth::id();
+        
+        $student= student::where('user_id',Auth::id())->first();
+        if($student!=NULL){
+
+            $studentCourses= CoursePerStudent::where('student_id', $student->id)->get();
+            $c=0;
+            $studentData= array();
+            foreach($studentCourses as $data){
+                $course = Course::where('id',$data->course_id)->first();
+                $studentData[$c]= [
+                    $data,
+                    $course
+                ];
+                ++$c;
+            }
+            //dd($studentData);
+           
+            return view('courses.grades',['studentData'=>$studentData]);
+        }else{
+            return redirect('student.create');
+        }
+        //dd($studentCourses);
+    }
+    
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($userID)
     {
-        //
+        
+        $student= student::where('user_id',$userID)->first();
+        $courses= Course::where('semestre',$student->semestre)->get();
+        
+        return view('courses/register',['courses'=>$courses]);
     }
 
     /**
@@ -42,13 +79,29 @@ class courseController extends Controller
         //dd();
         $id= Auth::id();
         $student = student::where('user_id',$id)->first();
-
+        //dd($request);
+        //dd($student);
         foreach($request->except('_token') as $course){
+
+
+            $courseD = Course::where('id',$course)->first();
+            $courseD->cupos--;
+            $courseD->save();
+
+            
             $registerCourses = new CoursePerStudent;
-            $registerCourses->student_id = $student->student_id;
+
+            $registerCourses->student_id = $student->id;
             $registerCourses->course_id = $course;
+            $registerCourses->first_cut = 0;
+            $registerCourses->second_cut = 0;
+            $registerCourses->third_cut = 0;
+            $registerCourses->total = 0;
+
             $registerCourses->save();
         }
+
+        return $this->index($id);
     }
 
     /**
@@ -70,8 +123,12 @@ class courseController extends Controller
      */
     public function edit($id)
     {
-        //
+        //dd($id);
+        $course = CoursePerStudent::find($id);
+        //dd($course);
+        return view('courses.edit',['course'=>$course]);
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -82,7 +139,7 @@ class courseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return $this->save($request,$id);
     }
 
     /**

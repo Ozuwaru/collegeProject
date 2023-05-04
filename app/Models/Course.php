@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     use HasFactory;
+    const UPDATED_AT = null;
+    const CREATED_AT = null;
 }

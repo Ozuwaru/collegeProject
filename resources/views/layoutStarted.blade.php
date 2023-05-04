@@ -16,11 +16,14 @@
                     <a href="{{route('logout');}}" class="nav-link">Logout</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('courses.index');}}" class="nav-link">Register Course</a>
+                    <a href="{{route('courses.create');}}" class="nav-link">Register Course</a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Notas</a>
+                    <a href="{{route('courses.index')}}" class="nav-link">Notas</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('edit')}}" class="nav-link">Modificar Notas</a>
                 </li>
 
             </ul>
