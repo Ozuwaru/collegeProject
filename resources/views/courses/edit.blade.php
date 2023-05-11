@@ -3,7 +3,9 @@
 
 <form  method="POST" action="{{route('courses.update',['course'=>$course->id])}}">
 
-
+    @role('escritor')
+        <p>Este contenido es para admins</p>
+    @endrole
 <table class="table table-hover">
     @method('PUT')
         @csrf
@@ -41,13 +43,5 @@
                 </tr>
         </tbody>
     </table>
-    {{-- @foreach ($studentData as $data)
-        <h2>{{$data[1]["course"]}}</h2>
-        <h2>{{$data[0]["first_cut"]}}</h2>
-        <h2>{{$data[0]["second_cut"]}}</h2>
-        <h2>{{$data[0]["third_cut"]}}</h2>
-        <?php
-            
-        ?>
-    @endforeach --}}
+  
 @endsection

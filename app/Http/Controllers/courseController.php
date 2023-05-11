@@ -18,10 +18,15 @@ class courseController extends Controller
 
     public function save(Request $request,$id){
         $course = CoursePerStudent::find($id);
-        $course->first_cut = $request->input('first_cut');
-        $course->second_cut = $request->input('second_cut');
-        $course->third_cut = $request->input('third_cut');
-        $course->total = ($request->input('first_cut') + $request->input('second_cut') + $request->input('third_cut'))/3;
+        $total=0;
+        foreach($request->all("first_cut","second_cut","third_cut") as $key=> $value){
+            if($value>20){
+                $value = 20;
+            }
+            $course->$key= $value;
+            $total+=$value;
+        }
+        $course->total = ($total)/3;
         $course->save();
         return redirect('courses');
     }
@@ -34,19 +39,25 @@ class courseController extends Controller
         $student= student::where('user_id',Auth::id())->first();
         if($student!=NULL){
 
-            $studentCourses= CoursePerStudent::where('student_id', $student->id)->get();
+            //$studentCourses= CoursePerStudent::where('student_id', $student->id)->get();
+            $studentCourses= CoursePerStudent::select('id','course_id','first_cut','second_cut','third_cut','total')->where('student_id', $student->id)->get();
             $c=0;
             $studentData= array();
             foreach($studentCourses as $data){
                 $course = Course::where('id',$data->course_id)->first();
                 $studentData[$c]= [
-                    $data,
-                    $course
+                        "id"=>$data->id,
+                        "name"=>$course->course,
+                        "seccion"=>$course->seccion,
+                        "fir"=>$data->first_cut,
+                        "sec"=>$data->second_cut,
+                        "thi"=>$data->third_cut,
+                        "total"=>$data->total,
                 ];
                 ++$c;
             }
             //dd($studentData);
-           
+            
             return view('courses.grades',['studentData'=>$studentData]);
         }else{
             return redirect('student.create');
@@ -59,9 +70,11 @@ class courseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($userID)
+    public function create($userID=NULL)
     {
-        
+        if($userID==NULL){
+            $userID = Auth::id();
+        }
         $student= student::where('user_id',$userID)->first();
         $courses= Course::where('semestre',$student->semestre)->get();
         
@@ -121,6 +134,7 @@ class courseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    
     public function edit($id)
     {
         //dd($id);

@@ -31,13 +31,14 @@ class studentController extends Controller
             
             $student = new Student;
             $user->isStudent= true;
+            $user->assignRole('student');
             $user->save();
             $student->semestre = 1;
             $student->user_id = $user->id;
             $student->save();
         }
         
-        return redirect()->route('courses.create',['userID',$user->id]);
+        return redirect()->route('courses.create',['userID'=>$user->id]);
     }
 
     /**

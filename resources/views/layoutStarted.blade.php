@@ -22,9 +22,6 @@
                 <li class="nav-item">
                     <a href="{{route('courses.index')}}" class="nav-link">Notas</a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{route('edit')}}" class="nav-link">Modificar Notas</a>
-                </li>
 
             </ul>
     </nav>

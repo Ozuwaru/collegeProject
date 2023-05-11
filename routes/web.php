@@ -32,7 +32,6 @@ Route::middleware(['auth'])->group(function (){
     Route::resource('student',studentController::class)->middleware('auth.basic');
     
     Route::resource('courses', courseController::class)->middleware('auth.basic');
-    Route::get('editGrades', [courseController::class,'editG'])->middleware('auth.basic')->name('edit');
 });
 
 Route::get('register',[registerController::class,'register'])->name('register');
