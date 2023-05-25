@@ -14,9 +14,28 @@ class studentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('roleCheck', ['except' => ['create','store','show','edit','destroy']]);
+    }
+    
     public function index()
     {
-        //
+        $students = student::get();
+        
+        $studentInfo = array();
+        $c=0;
+        foreach($students as $s){
+            $name = User::where("id",$s['id'])->pluck("name")->first();
+            $studentInfo[$c]=[
+                "name"=>$name,
+                "id"=>$s['id'],
+                "semester"=>$s['semestre']
+            ];
+            $c++;
+        }
+        //dd($studentInfo);
+        return view("general.students",["students"=>$studentInfo]);
     }
     
     /**

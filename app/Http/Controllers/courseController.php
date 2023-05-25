@@ -34,8 +34,10 @@ class courseController extends Controller
     public function index()
     {
         
+
+        return $this->show();
         //$id= Auth::id();
-        
+        /*
         $student= student::where('user_id',Auth::id())->first();
         if($student!=NULL){
 
@@ -61,7 +63,7 @@ class courseController extends Controller
             return view('courses.grades',['studentData'=>$studentData]);
         }else{
             return redirect('student.create');
-        }
+        }*/
         //dd($studentCourses);
     }
     
@@ -123,9 +125,37 @@ class courseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id=NULL)
     {
-        //
+        if($id==NULL){
+            $id=Auth::id();
+        }
+        $student= student::where('user_id',$id)->first();
+        if($student!=NULL){
+
+            //$studentCourses= CoursePerStudent::where('student_id', $student->id)->get();
+            $studentCourses= CoursePerStudent::select('id','course_id','first_cut','second_cut','third_cut','total')->where('student_id', $student->id)->get();
+            $c=0;
+            $studentData= array();
+            foreach($studentCourses as $data){
+                $course = Course::where('id',$data->course_id)->first();
+                $studentData[$c]= [
+                        "id"=>$data->id,
+                        "name"=>$course->course,
+                        "seccion"=>$course->seccion,
+                        "fir"=>$data->first_cut,
+                        "sec"=>$data->second_cut,
+                        "thi"=>$data->third_cut,
+                        "total"=>$data->total,
+                ];
+                ++$c;
+            }
+            //dd($studentData);
+            
+            return view('courses.grades',['studentData'=>$studentData]);
+        }else{
+            return redirect('student.create');
+        }
     }
 
     /**

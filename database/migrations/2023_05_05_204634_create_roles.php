@@ -17,7 +17,7 @@ return new class extends Migration
     public function up()
     {
         $role1 = Role::create(['name'=>"admin"]);
-        $role2 = Role::create(['name'=>"writer"]);
+        $role2 = Role::create(['name'=>"teacher"]);
         $role3 = Role::create(['name'=>"student"]);
 
     }
@@ -29,5 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
+
     }
 };

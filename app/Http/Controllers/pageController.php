@@ -19,7 +19,7 @@ class pageController extends Controller
 
 
         }else{
-            return view('dashboard',['user'=>$user,'student'=>NULL]);  
+            return view('dashboard',['user'=>$user]);  
             
         }
         
